@@ -48,6 +48,19 @@ def get_atnd(id, ua = '')
     data[:body_html] = (doc/'div.mg-b20').inner_html
     data[:body_text] = (doc/'div.mg-b20').inner_text
 
+    # comments
+    data[:comments] = [ ]
+    (doc/'div#comments-content'/'dl').each_with_index do |e, i|
+      comment = { }
+      comment[:name] = (e/'dt'/'strong').inner_text
+      comment[:url] = (e/'dt'/'strong'/'a').attribute('href').value if !(e/'dt'/'strong'/'a').empty?
+      comment[:date] = Time.parse((e/'span.comments-date').inner_text.sub(/\(\)/, ''))
+
+      comment[:body_html] = (e/'dd').inner_html
+      comment[:body_text] = (e/'dd').inner_text
+      data[:comments].push comment
+    end
+
     # menber info
     member_info = (doc/'aside.side'/'div#members-info'/'li'/'strong')
     data[:join_size] = member_info[0].inner_text.to_i
