@@ -3,19 +3,19 @@ require 'open-uri'
 require 'time'
 require 'nokogiri'
 
-UA = ''
 BASE_URL = 'http://atnd.org/events/'
 
-def get_atnd(id)
+def get_atnd(id, ua = '')
   log = Logger.new('./log/crawl.log')
   data = { }
   data[:id] = id
+  data[:check_time] = Time.now
 
   url = BASE_URL + id.to_s
   log.info("Try #{url}")
 
   begin
-    doc = (Nokogiri::HTML(open(url, 'User-Agent' => UA).read)/'div.wrapper')
+    doc = (Nokogiri::HTML(open(url, 'User-Agent' => ua).read)/'div.wrapper')
 
     # title / subtitle
     data[:title] = (doc/'hgroup.title.clearfix'/'h1').inner_text
