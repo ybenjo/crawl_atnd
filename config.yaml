@@ -1,0 +1,4 @@
+address: localhost
+db: crawl
+collection: atnd
+wait: 30
