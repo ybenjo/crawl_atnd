@@ -63,7 +63,8 @@ def get_atnd(id, ua = '')
 
     # menber info
     member_info = (doc/'aside.side'/'div#members-info'/'li'/'strong')
-    data[:join_size] = member_info[0].inner_text.to_i
+
+    data[:join_size] = member_info[0].inner_text.to_i if member_info.size > 0
 
     case member_info.size
     when 2
@@ -101,5 +102,5 @@ def get_atnd(id, ua = '')
 end
 
 if __FILE__ == $0
-  p get_atnd(2)
+  p get_atnd(5)
 end
