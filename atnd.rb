@@ -35,7 +35,7 @@ def get_atnd(id, ua = '')
     data[:address] = (elements[2]/'dd'/'span').inner_text
 
     # url
-    data[:event_url] = (elements[3]/'dd'/'a').attribute('href').value
+    data[:event_url] = (elements[3]/'dd'/'a').attribute('href').value if !(elements[3]/'dd'/'a').empty?
 
     # owner/account
     data[:owner_name] = (elements[4]/'dd').inner_text
@@ -101,5 +101,5 @@ def get_atnd(id, ua = '')
 end
 
 if __FILE__ == $0
-  p get_atnd(1)
+  p get_atnd(2)
 end
